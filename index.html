@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Handling Meta Editor</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section h2 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+            color: #444;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: auto;
+            font-size: 1rem;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .xml-output {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            margin-top: 30px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-x: auto;
+            border-radius: 5px;
+        }
+        .input-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .input-wrapper > div {
+            flex: 1;
+            margin-right: 20px;
+            min-width: 250px;
+        }
+        .input-wrapper > div:last-child {
+            margin-right: 0;
+        }
+        @media (max-width: 768px) {
+            .input-wrapper > div {
+                flex: 100%;
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Advanced Handling Meta Editor</h1>
+        <form id="handlingForm">
+            <!-- Handling Info Section -->
+            <div class="section">
+                <h2>Basic Handling Information</h2>
+                <div class="form-group">
+                    <label for="handlingName">Handling Name</label>
+                    <input type="text" id="handlingName" value="mkvjay" required>
+                </div>
+                <div class="input-wrapper">
+                    <div>
+                        <label for="fMass">Mass</label>
+                        <input type="number" id="fMass" value="1785.0" step="0.1" required>
+                    </div>
+                    <div>
+                        <label for="fInitialDragCoeff">Initial Drag Coefficient</label>
+                        <input type="number" id="fInitialDragCoeff" value="0.5" step="0.1" required>
+                    </div>
+                    <div>
+                        <label for="fDownforceModifier">Downforce Modifier</label>
+                        <input type="number" id="fDownforceModifier" value="0.0" step="0.1" required>
+                    </div>
+                    <div>
+                        <label for="fPercentSubmerged">Percent Submerged</label>
+                        <input type="number" id="fPercentSubmerged" value="85.0" step="0.1" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center of Mass Section -->
+            <div class="section">
+                <h2>Center of Mass & Inertia</h2>
+                <div class="input-wrapper">
+                    <div>
+                        <label for="vecCentreOfMassOffsetX">Centre of Mass (X)</label>
+                        <input type="number" id="vecCentreOfMassOffsetX" value="0.0" step="0.1" required>
+                    </div>
+                    <div>
+                        <label for="vecCentreOfMassOffsetY">Centre of Mass (Y)</label>
+                        <input type="number" id="vecCentreOfMassOffsetY" value="-0.1" step="0.1" required>
+                    </div>
+                    <div>
+                        <label for="vecCentreOfMassOffsetZ">Centre of Mass (Z)</label>
+                        <input type="number" id="vecCentreOfMassOffsetZ" value="0.0" step="0.1" required>
+                    </div>
+                </div>
+                <div class="input-wrapper">
+                    <div>
+                        <label for="vecInertiaMultiplierX">Inertia Multiplier (X)</label>
+                        <input type="number" id="vecInertiaMultiplierX" value="1.0" step="0.1" required>
+                    </div>
+                    <div>
+                        <label for="vecInertiaMultiplierY">Inertia Multiplier (Y)</label>
+                        <input type="number" id="vecInertiaMultiplierY" value="1.0" step="0.1" required>
+                    </div>
+                    <div>
+                        <label for="vecInertiaMultiplierZ">Inertia Multiplier (Z)</label>
+                        <input type="number" id="vecInertiaMultiplierZ" value="1.1" step="0.1" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drive & Suspension Section -->
+            <div class="section">
+                <h2>Drive & Suspension Settings</h2>
+                <div class="input-wrapper">
+                    <div>
+                        <label for="fDriveBiasFront">Drive Bias Front</label>
+                        <input type="number" id="fDriveBiasFront" value="0.45" step="0.01" required>
+                    </div>
+                    <div>
+                        <label for="nInitialDriveGears">Initial Drive Gears</label>
+                        <input type="number" id="nInitialDriveGears" value="8" required>
+                    </div>
+                    <div>
+                        <label for="fInitialDriveForce">Initial Drive Force</label>
+                        <input type="number" id="fInitialDriveForce" value="1.0" step="0.1" required>
+                    </div>
+                </div>
+                <div class="input-wrapper">
+                    <div>
+                        <label for="fSuspensionForce">Suspension Force</label>
+                        <input type="number" id="fSuspensionForce" value="6.2" step="0.1" required>
+                    </div>
+                    <div>
+                        <label for="fSuspensionCompDamp">Suspension Compression Damp</label>
+                        <input type="number" id="fSuspensionCompDamp" value="1.2" step="0.1" required>
+                    </div>
+                    <div>
+                        <label for="fSuspensionReboundDamp">Suspension Rebound Damp</label>
+                        <input type="number" id="fSuspensionReboundDamp" value="2.1" step="0.1" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Misc Section -->
+            <div class="section">
+                <h2>Miscellaneous Settings</h2>
+                <div class="input-wrapper">
+                    <div>
+                        <label for="fBrakeForce">Brake Force</label>
+                        <input type="number" id="fBrakeForce" value="1.0" step="0.1" required>
+                    </div>
+                    <div>
+                        <label for="fWeaponDamageMult">Weapon Damage Multiplier</label>
+                        <input type="number" id="fWeaponDamageMult" value="1.0" step="0.1" required>
+                    </div>
+                    <div>
+                        <label for="fPetrolTankVolume">Petrol Tank Volume</label>
+                        <input type="number" id="fPetrolTankVolume" value="65.0" step="0.1" required>
+                    </div>
+                </div>
+                <div class="input-wrapper">
+                    <div>
+                        <label for="strModelFlags">Model Flags</label>
+                        <input type="text" id="strModelFlags" value="440010" required>
+                    </div>
+                    <div>
+                        <label for="strHandlingFlags">Handling Flags</label>
+                        <input type="text" id="strHandlingFlags" value="1" required>
+                    </div>
+                    <div>
+                        <label for="AIHandling">AI Handling</label>
+                        <select id="AIHandling">
+                            <option value="SPORTS_CAR" selected>Sports Car</option>
+                            <option value="SEDAN">Sedan</option>
+                            <option value="SUV">SUV</option>
+                            <option value="MOTORCYCLE">Motorcycle</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Generate XML">
+            </div>
+        </form>
+
+        <!-- Output XML -->
+        <div class="xml-output" id="xmlOutput"></div>
+    </div>
+
+    <script>
+        document.getElementById('handlingForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Collecting all input values
+            const handlingName = document.getElementById('handlingName').value;
+            const fMass = document.getElementById('fMass').value;
+            const fInitialDragCoeff = document.getElementById('fInitialDragCoeff').value;
+            const fDownforceModifier = document.getElementById('fDownforceModifier').value;
+            const fPercentSubmerged = document.getElementById('fPercentSubmerged').value;
+            const vecCentreOfMassOffsetX = document.getElementById('vecCentreOfMassOffsetX').value;
+            const vecCentreOfMassOffsetY = document.getElementById('vecCentreOfMassOffsetY').value;
+            const vecCentreOfMassOffsetZ = document.getElementById('vecCentreOfMassOffsetZ').value;
+            const vecInertiaMultiplierX = document.getElementById('vecInertiaMultiplierX').value;
+            const vecInertiaMultiplierY = document.getElementById('vecInertiaMultiplierY').value;
+            const vecInertiaMultiplierZ = document.getElementById('vecInertiaMultiplierZ').value;
+            const fDriveBiasFront = document.getElementById('fDriveBiasFront').value;
+            const nInitialDriveGears = document.getElementById('nInitialDriveGears').value;
+            const fInitialDriveForce = document.getElementById('fInitialDriveForce').value;
+            const fSuspensionForce = document.getElementById('fSuspensionForce').value;
+            const fSuspensionCompDamp = document.getElementById('fSuspensionCompDamp').value;
+            const fSuspensionReboundDamp = document.getElementById('fSuspensionReboundDamp').value;
+            const fBrakeForce = document.getElementById('fBrakeForce').value;
+            const strModelFlags = document.getElementById('strModelFlags').value;
+            const strHandlingFlags = document.getElementById('strHandlingFlags').value;
+            const AIHandling = document.getElementById('AIHandling').value;
+
+            // Generating XML
+            let xmlOutput = `<?xml version="1.0" encoding="UTF-8"?>
+<CHandlingDataMgr>
+  <HandlingData>
+    <Item type="CHandlingData">
+      <handlingName>${handlingName}</handlingName>
+      <fMass value="${fMass}" />
+      <fInitialDragCoeff value="${fInitialDragCoeff}" />
+      <fDownforceModifier value="${fDownforceModifier}" />
+      <fPercentSubmerged value="${fPercentSubmerged}" />
+      <vecCentreOfMassOffset x="${vecCentreOfMassOffsetX}" y="${vecCentreOfMassOffsetY}" z="${vecCentreOfMassOffsetZ}" />
+      <vecInertiaMultiplier x="${vecInertiaMultiplierX}" y="${vecInertiaMultiplierY}" z="${vecInertiaMultiplierZ}" />
+      <fDriveBiasFront value="${fDriveBiasFront}" />
+      <nInitialDriveGears value="${nInitialDriveGears}" />
+      <fInitialDriveForce value="${fInitialDriveForce}" />
+      <fSuspensionForce value="${fSuspensionForce}" />
+      <fSuspensionCompDamp value="${fSuspensionCompDamp}" />
+      <fSuspensionReboundDamp value="${fSuspensionReboundDamp}" />
+      <fBrakeForce value="${fBrakeForce}" />
+      <strModelFlags>${strModelFlags}</strModelFlags>
+      <strHandlingFlags>${strHandlingFlags}</strHandlingFlags>
+      <AIHandling>${AIHandling}</AIHandling>
+    </Item>
+  </HandlingData>
+</CHandlingDataMgr>`;
+
+            // Displaying the generated XML
+            document.getElementById('xmlOutput').textContent = xmlOutput;
+        });
+    </script>
+</body>
+</html>
