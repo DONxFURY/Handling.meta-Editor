@@ -1,301 +1,376 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Handling Meta Editor</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            font-size: 2rem;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .section {
-            margin-bottom: 30px;
-        }
-        .section h2 {
-            font-size: 1.25rem;
-            margin-bottom: 10px;
-            color: #444;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 5px;
-        }
-        input[type="text"],
-        input[type="number"],
-        select {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: auto;
-            font-size: 1rem;
-        }
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-        .xml-output {
-            background-color: #333;
-            color: white;
-            padding: 15px;
-            margin-top: 30px;
-            font-family: monospace;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            overflow-x: auto;
-            border-radius: 5px;
-        }
-        .input-wrapper {
-            display: flex;
-            flex-wrap: wrap;
-        }
-        .input-wrapper > div {
-            flex: 1;
-            margin-right: 20px;
-            min-width: 250px;
-        }
-        .input-wrapper > div:last-child {
-            margin-right: 0;
-        }
-        @media (max-width: 768px) {
-            .input-wrapper > div {
-                flex: 100%;
-                margin-right: 0;
-                margin-bottom: 10px;
-            }
-        }
-    </style>
+  <!-- Keep all the previous CSS styles -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@300;500&display=swap');
+    :root {
+      --neon-blue: #00f7ff;
+      --deep-space: #0a0f1c;
+      --cyber-purple: #6c00ff;
+    }
+    
+    body {
+      background-color: var(--deep-space);
+      color: var(--neon-blue);
+      font-family: 'Orbitron', 'Roboto Mono', monospace;
+      padding: 20px;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    h1, h2 {
+      color: var(--neon-blue);
+      text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
+      margin: 0 0 1.5rem;
+    }
+
+    .section {
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      background: linear-gradient(145deg, #111827dd, #0d1522dd);
+      border: 1px solid var(--neon-blue);
+      border-radius: 1rem;
+      box-shadow: 0 0 1rem var(--neon-blue)33;
+      backdrop-filter: blur(5px);
+      transition: transform 0.3s ease;
+    }
+
+    .section:hover {
+      transform: translateY(-2px);
+    }
+
+    .input-group {
+      margin: 1.5rem 0;
+      position: relative;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #7fd4f3;
+    }
+
+    input[type="number"], 
+    input[type="file"], 
+    input[type="text"] {
+      width: 100%;
+      padding: 0.8rem;
+      background: #0a0f1c99;
+      color: var(--neon-blue);
+      border: 1px solid var(--neon-blue)33;
+      border-radius: 0.5rem;
+      font-family: 'Roboto Mono', monospace;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 0.8rem var(--neon-blue)55;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 1.5rem 0;
+    }
+
+    button {
+      background: linear-gradient(45deg, var(--neon-blue), var(--cyber-purple));
+      color: var(--deep-space);
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, #ffffff44, transparent);
+      transform: rotate(45deg);
+      transition: all 0.5s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 1.5rem var(--neon-blue)55;
+    }
+
+    button:hover::before {
+      animation: shine 1.5s;
+    }
+
+    .entry {
+      margin: 1.5rem 0;
+      padding: 1.2rem;
+      background: #0d1b2a99;
+      border: 1px solid var(--neon-blue)22;
+      border-radius: 0.8rem;
+      position: relative;
+    }
+
+    .entry::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 0.8rem;
+      pointer-events: none;
+      box-shadow: inset 0 0 1rem var(--neon-blue)22;
+    }
+
+    @keyframes shine {
+      0% { left: -50%; }
+      100% { left: 150%; }
+    }
+
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000000dd;
+      display: none;
+      place-items: center;
+      z-index: 999;
+    }
+
+    .spinner {
+      border: 4px solid var(--neon-blue)33;
+      border-top: 4px solid var(--neon-blue);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 1rem 2rem;
+      background: var(--deep-space);
+      border: 1px solid var(--neon-blue);
+      border-radius: 0.5rem;
+      opacity: 0;
+      transform: translateY(100%);
+      transition: all 0.3s ease;
+    }
+
+    .toast.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Advanced Handling Meta Editor</h1>
-        <form id="handlingForm">
-            <!-- Handling Info Section -->
-            <div class="section">
-                <h2>Basic Handling Information</h2>
-                <div class="form-group">
-                    <label for="handlingName">Handling Name</label>
-                    <input type="text" id="handlingName" value="mkvjay" required>
-                </div>
-                <div class="input-wrapper">
-                    <div>
-                        <label for="fMass">Mass</label>
-                        <input type="number" id="fMass" value="1785.0" step="0.1" required>
-                    </div>
-                    <div>
-                        <label for="fInitialDragCoeff">Initial Drag Coefficient</label>
-                        <input type="number" id="fInitialDragCoeff" value="0.5" step="0.1" required>
-                    </div>
-                    <div>
-                        <label for="fDownforceModifier">Downforce Modifier</label>
-                        <input type="number" id="fDownforceModifier" value="0.0" step="0.1" required>
-                    </div>
-                    <div>
-                        <label for="fPercentSubmerged">Percent Submerged</label>
-                        <input type="number" id="fPercentSubmerged" value="85.0" step="0.1" required>
-                    </div>
-                </div>
-            </div>
+  <div class="loading-overlay" id="loader">
+    <div class="spinner"></div>
+  </div>
 
-            <!-- Center of Mass Section -->
-            <div class="section">
-                <h2>Center of Mass & Inertia</h2>
-                <div class="input-wrapper">
-                    <div>
-                        <label for="vecCentreOfMassOffsetX">Centre of Mass (X)</label>
-                        <input type="number" id="vecCentreOfMassOffsetX" value="0.0" step="0.1" required>
-                    </div>
-                    <div>
-                        <label for="vecCentreOfMassOffsetY">Centre of Mass (Y)</label>
-                        <input type="number" id="vecCentreOfMassOffsetY" value="-0.1" step="0.1" required>
-                    </div>
-                    <div>
-                        <label for="vecCentreOfMassOffsetZ">Centre of Mass (Z)</label>
-                        <input type="number" id="vecCentreOfMassOffsetZ" value="0.0" step="0.1" required>
-                    </div>
-                </div>
-                <div class="input-wrapper">
-                    <div>
-                        <label for="vecInertiaMultiplierX">Inertia Multiplier (X)</label>
-                        <input type="number" id="vecInertiaMultiplierX" value="1.0" step="0.1" required>
-                    </div>
-                    <div>
-                        <label for="vecInertiaMultiplierY">Inertia Multiplier (Y)</label>
-                        <input type="number" id="vecInertiaMultiplierY" value="1.0" step="0.1" required>
-                    </div>
-                    <div>
-                        <label for="vecInertiaMultiplierZ">Inertia Multiplier (Z)</label>
-                        <input type="number" id="vecInertiaMultiplierZ" value="1.1" step="0.1" required>
-                    </div>
-                </div>
-            </div>
+  <div class="toast" id="toast"></div>
 
-            <!-- Drive & Suspension Section -->
-            <div class="section">
-                <h2>Drive & Suspension Settings</h2>
-                <div class="input-wrapper">
-                    <div>
-                        <label for="fDriveBiasFront">Drive Bias Front</label>
-                        <input type="number" id="fDriveBiasFront" value="0.45" step="0.01" required>
-                    </div>
-                    <div>
-                        <label for="nInitialDriveGears">Initial Drive Gears</label>
-                        <input type="number" id="nInitialDriveGears" value="8" required>
-                    </div>
-                    <div>
-                        <label for="fInitialDriveForce">Initial Drive Force</label>
-                        <input type="number" id="fInitialDriveForce" value="1.0" step="0.1" required>
-                    </div>
-                </div>
-                <div class="input-wrapper">
-                    <div>
-                        <label for="fSuspensionForce">Suspension Force</label>
-                        <input type="number" id="fSuspensionForce" value="6.2" step="0.1" required>
-                    </div>
-                    <div>
-                        <label for="fSuspensionCompDamp">Suspension Compression Damp</label>
-                        <input type="number" id="fSuspensionCompDamp" value="1.2" step="0.1" required>
-                    </div>
-                    <div>
-                        <label for="fSuspensionReboundDamp">Suspension Rebound Damp</label>
-                        <input type="number" id="fSuspensionReboundDamp" value="2.1" step="0.1" required>
-                    </div>
-                </div>
-            </div>
+  <h1>⚡ CyberTune Pro - Ultimate Handling.meta Editor</h1>
 
-            <!-- Misc Section -->
-            <div class="section">
-                <h2>Miscellaneous Settings</h2>
-                <div class="input-wrapper">
-                    <div>
-                        <label for="fBrakeForce">Brake Force</label>
-                        <input type="number" id="fBrakeForce" value="1.0" step="0.1" required>
-                    </div>
-                    <div>
-                        <label for="fWeaponDamageMult">Weapon Damage Multiplier</label>
-                        <input type="number" id="fWeaponDamageMult" value="1.0" step="0.1" required>
-                    </div>
-                    <div>
-                        <label for="fPetrolTankVolume">Petrol Tank Volume</label>
-                        <input type="number" id="fPetrolTankVolume" value="65.0" step="0.1" required>
-                    </div>
-                </div>
-                <div class="input-wrapper">
-                    <div>
-                        <label for="strModelFlags">Model Flags</label>
-                        <input type="text" id="strModelFlags" value="440010" required>
-                    </div>
-                    <div>
-                        <label for="strHandlingFlags">Handling Flags</label>
-                        <input type="text" id="strHandlingFlags" value="1" required>
-                    </div>
-                    <div>
-                        <label for="AIHandling">AI Handling</label>
-                        <select id="AIHandling">
-                            <option value="SPORTS_CAR" selected>Sports Car</option>
-                            <option value="SEDAN">Sedan</option>
-                            <option value="SUV">SUV</option>
-                            <option value="MOTORCYCLE">Motorcycle</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Generate XML">
-            </div>
-        </form>
-
-        <!-- Output XML -->
-        <div class="xml-output" id="xmlOutput"></div>
+  <div class="section">
+    <h2>📁 File Operations</h2>
+    <div class="button-group">
+      <input type="file" id="fileInput" multiple accept=".xml,.meta" hidden />
+      <button onclick="document.getElementById('fileInput').click()">
+        📥 Import Files
+      </button>
+      <button onclick="exportCombinedXML()" id="exportBtn" disabled>
+        📤 Export handling.meta
+      </button>
+      <button onclick="clearAll()">❌ Clear All</button>
     </div>
+    <div class="note">Supports file drag & drop</div>
+    <div id="fileList" class="output"></div>
+  </div>
 
-    <script>
-        document.getElementById('handlingForm').addEventListener('submit', function (event) {
-            event.preventDefault();
+  <div class="section">
+    <h2>🔧 Active Tuning Parameters</h2>
+    <div id="combinedOutput" class="grid"></div>
+  </div>
 
-            // Collecting all input values
-            const handlingName = document.getElementById('handlingName').value;
-            const fMass = document.getElementById('fMass').value;
-            const fInitialDragCoeff = document.getElementById('fInitialDragCoeff').value;
-            const fDownforceModifier = document.getElementById('fDownforceModifier').value;
-            const fPercentSubmerged = document.getElementById('fPercentSubmerged').value;
-            const vecCentreOfMassOffsetX = document.getElementById('vecCentreOfMassOffsetX').value;
-            const vecCentreOfMassOffsetY = document.getElementById('vecCentreOfMassOffsetY').value;
-            const vecCentreOfMassOffsetZ = document.getElementById('vecCentreOfMassOffsetZ').value;
-            const vecInertiaMultiplierX = document.getElementById('vecInertiaMultiplierX').value;
-            const vecInertiaMultiplierY = document.getElementById('vecInertiaMultiplierY').value;
-            const vecInertiaMultiplierZ = document.getElementById('vecInertiaMultiplierZ').value;
-            const fDriveBiasFront = document.getElementById('fDriveBiasFront').value;
-            const nInitialDriveGears = document.getElementById('nInitialDriveGears').value;
-            const fInitialDriveForce = document.getElementById('fInitialDriveForce').value;
-            const fSuspensionForce = document.getElementById('fSuspensionForce').value;
-            const fSuspensionCompDamp = document.getElementById('fSuspensionCompDamp').value;
-            const fSuspensionReboundDamp = document.getElementById('fSuspensionReboundDamp').value;
-            const fBrakeForce = document.getElementById('fBrakeForce').value;
-            const strModelFlags = document.getElementById('strModelFlags').value;
-            const strHandlingFlags = document.getElementById('strHandlingFlags').value;
-            const AIHandling = document.getElementById('AIHandling').value;
+<script>
+// Fixed JavaScript implementation
+let handlingEntries = new Map();
+const toast = document.getElementById('toast');
+const loader = document.getElementById('loader');
+const exportBtn = document.getElementById('exportBtn');
 
-            // Generating XML
-            let xmlOutput = `<?xml version="1.0" encoding="UTF-8"?>
+// Add event listeners
+document.getElementById('fileInput').addEventListener('change', parseMultiple);
+
+function showToast(message, duration = 3000) {
+  toast.textContent = message;
+  toast.classList.add('visible');
+  setTimeout(() => toast.classList.remove('visible'), duration);
+}
+
+async function parseMultiple() {
+  try {
+    loader.style.display = 'grid';
+    const files = document.getElementById('fileInput').files;
+    if (!files.length) return;
+    
+    handlingEntries.clear();
+    const output = document.getElementById('combinedOutput');
+    output.innerHTML = '';
+
+    // Fixed Promise.all syntax
+    await Promise.all(Array.from(files).map(async file => {
+      const text = await file.text();
+      const parser = new DOMParser();
+      const xml = parser.parseFromString(text, 'text/xml');
+      
+      if (xml.querySelector('parsererror')) {
+        showToast(`❌ Error parsing ${file.name}`, 5000);
+        return;
+      }
+
+      xml.querySelectorAll('Item[type="CHandlingData"]').forEach(item => {
+        const handlingName = item.querySelector('handlingName')?.textContent;
+        if (!handlingName) return;
+
+        // Clone the original node to preserve structure
+        handlingEntries.set(handlingName, item.cloneNode(true));
+      });
+    }));
+
+    updateUI();
+    exportBtn.disabled = false;
+    showToast(`✅ Loaded ${handlingEntries.size} handling entries`);
+  } catch (error) {
+    showToast(`⚠️ Error: ${error.message}`, 5000);
+  } finally {
+    loader.style.display = 'none';
+  }
+}
+
+function updateUI() {
+  const output = document.getElementById('combinedOutput');
+  output.innerHTML = '';
+
+  handlingEntries.forEach((item, handlingName) => {
+    const container = document.createElement('div');
+    container.className = 'entry';
+    container.innerHTML = `<h3>${handlingName}</h3>`;
+
+    Array.from(item.children).forEach(node => {
+      if (node.nodeType === 1 && node.hasAttribute('value')) {
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.step = '0.001';
+        input.value = node.getAttribute('value');
+        input.className = 'param-input';
+        input.dataset.param = node.tagName;
+        input.dataset.handling = handlingName;
+
+        const label = document.createElement('label');
+        label.textContent = node.tagName;
+        label.appendChild(input);
+        container.appendChild(label);
+      }
+    });
+
+    output.appendChild(container);
+  });
+}
+
+async function exportCombinedXML() {
+  try {
+    loader.style.display = 'grid';
+    const entries = Array.from(handlingEntries.values());
+    
+    // Create fresh XML structure
+    const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
 <CHandlingDataMgr>
   <HandlingData>
-    <Item type="CHandlingData">
-      <handlingName>${handlingName}</handlingName>
-      <fMass value="${fMass}" />
-      <fInitialDragCoeff value="${fInitialDragCoeff}" />
-      <fDownforceModifier value="${fDownforceModifier}" />
-      <fPercentSubmerged value="${fPercentSubmerged}" />
-      <vecCentreOfMassOffset x="${vecCentreOfMassOffsetX}" y="${vecCentreOfMassOffsetY}" z="${vecCentreOfMassOffsetZ}" />
-      <vecInertiaMultiplier x="${vecInertiaMultiplierX}" y="${vecInertiaMultiplierY}" z="${vecInertiaMultiplierZ}" />
-      <fDriveBiasFront value="${fDriveBiasFront}" />
-      <nInitialDriveGears value="${nInitialDriveGears}" />
-      <fInitialDriveForce value="${fInitialDriveForce}" />
-      <fSuspensionForce value="${fSuspensionForce}" />
-      <fSuspensionCompDamp value="${fSuspensionCompDamp}" />
-      <fSuspensionReboundDamp value="${fSuspensionReboundDamp}" />
-      <fBrakeForce value="${fBrakeForce}" />
-      <strModelFlags>${strModelFlags}</strModelFlags>
-      <strHandlingFlags>${strHandlingFlags}</strHandlingFlags>
-      <AIHandling>${AIHandling}</AIHandling>
-    </Item>
+    ${entries.map(entry => {
+      const clone = entry.cloneNode(true);
+      const handlingName = clone.querySelector('handlingName').textContent;
+      
+      // Find all inputs for this handling entry
+      document.querySelectorAll(`input[data-handling="${handlingName}"]`).forEach(input => {
+        const param = input.dataset.param;
+        const value = input.value;
+        const elem = clone.querySelector(param);
+        if (elem) elem.setAttribute('value', value);
+      });
+      
+      return clone.outerHTML;
+    }).join('\n    ')}
   </HandlingData>
 </CHandlingDataMgr>`;
 
-            // Displaying the generated XML
-            document.getElementById('xmlOutput').textContent = xmlOutput;
-        });
-    </script>
+    // Create downloadable file
+    const blob = new Blob([xmlContent], { type: 'application/xml' });
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `handling_${Date.now()}.meta`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    showToast('✅ File exported successfully!');
+  } catch (error) {
+    showToast(`⚠️ Export failed: ${error.message}`, 5000);
+  } finally {
+    loader.style.display = 'none';
+  }
+}
+
+function clearAll() {
+  handlingEntries.clear();
+  document.getElementById('combinedOutput').innerHTML = '';
+  document.getElementById('fileInput').value = '';
+  exportBtn.disabled = true;
+  showToast('🧹 All entries cleared');
+}
+
+// Drag & drop handlers
+document.addEventListener('dragover', e => e.preventDefault());
+document.addEventListener('drop', e => {
+  e.preventDefault();
+  document.getElementById('fileInput').files = e.dataTransfer.files;
+  parseMultiple();
+});
+
+// Real-time input validation
+document.addEventListener('input', e => {
+  if (e.target.classList.contains('param-input')) {
+    const value = parseFloat(e.target.value);
+    e.target.style.borderColor = isNaN(value) ? '#ff4444' : '#00f7ff33';
+  }
+});
+</script>
 </body>
 </html>
