@@ -1,376 +1,784 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Keep all the previous CSS styles -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PROFESSIONAL | FiveM Handling.meta Tuner</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@300;500&display=swap');
     :root {
-      --neon-blue: #00f7ff;
-      --deep-space: #0a0f1c;
-      --cyber-purple: #6c00ff;
+      --bg: #121212;
+      --panel-bg: #1e1e1e;
+      --card-bg: #252525;
+      --text: #e0e0e0;
+      --text-secondary: #b0b0b0;
+      --accent: #4ecdc4;
+      --accent-dark: #38b2a6;
+      --accent-light: #80dfd9;
+      --border: #3a3a3a;
+      --success: #4ade80;
+      --warning: #facc15;
+      --danger: #f87171;
+      --shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+      --transition: all 0.3s ease;
+      --radius: 12px;
+      --radius-sm: 8px;
     }
-    
-    body {
-      background-color: var(--deep-space);
-      color: var(--neon-blue);
-      font-family: 'Orbitron', 'Roboto Mono', monospace;
-      padding: 20px;
+
+    * {
+      box-sizing: border-box;
       margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      background-image: radial-gradient(circle at 25% 25%, rgba(40, 40, 40, 0.2) 0%, transparent 55%), 
+                        radial-gradient(circle at 75% 75%, rgba(40, 40, 40, 0.2) 0%, transparent 55%);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      padding: 20px;
       min-height: 100vh;
     }
 
-    h1, h2 {
-      color: var(--neon-blue);
-      text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
-      margin: 0 0 1.5rem;
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
     }
 
-    .section {
-      margin-bottom: 2rem;
-      padding: 1.5rem;
-      background: linear-gradient(145deg, #111827dd, #0d1522dd);
-      border: 1px solid var(--neon-blue);
-      border-radius: 1rem;
-      box-shadow: 0 0 1rem var(--neon-blue)33;
-      backdrop-filter: blur(5px);
-      transition: transform 0.3s ease;
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px 0;
     }
 
-    .section:hover {
-      transform: translateY(-2px);
-    }
-
-    .input-group {
-      margin: 1.5rem 0;
-      position: relative;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 700;
-      font-size: 0.9rem;
-      color: #7fd4f3;
-    }
-
-    input[type="number"], 
-    input[type="file"], 
-    input[type="text"] {
-      width: 100%;
-      padding: 0.8rem;
-      background: #0a0f1c99;
-      color: var(--neon-blue);
-      border: 1px solid var(--neon-blue)33;
-      border-radius: 0.5rem;
-      font-family: 'Roboto Mono', monospace;
-      transition: all 0.3s ease;
-    }
-
-    input:focus {
-      outline: none;
-      border-color: var(--neon-blue);
-      box-shadow: 0 0 0.8rem var(--neon-blue)55;
-    }
-
-    .button-group {
+    .logo {
       display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin: 1.5rem 0;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 10px;
     }
 
-    button {
-      background: linear-gradient(45deg, var(--neon-blue), var(--cyber-purple));
-      color: var(--deep-space);
-      padding: 0.8rem 1.5rem;
-      border: none;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    button::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent, #ffffff44, transparent);
-      transform: rotate(45deg);
-      transition: all 0.5s ease;
-    }
-
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 1.5rem var(--neon-blue)55;
-    }
-
-    button:hover::before {
-      animation: shine 1.5s;
-    }
-
-    .entry {
-      margin: 1.5rem 0;
-      padding: 1.2rem;
-      background: #0d1b2a99;
-      border: 1px solid var(--neon-blue)22;
-      border-radius: 0.8rem;
-      position: relative;
-    }
-
-    .entry::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      border-radius: 0.8rem;
-      pointer-events: none;
-      box-shadow: inset 0 0 1rem var(--neon-blue)22;
-    }
-
-    @keyframes shine {
-      0% { left: -50%; }
-      100% { left: 150%; }
-    }
-
-    .loading-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #000000dd;
-      display: none;
-      place-items: center;
-      z-index: 999;
-    }
-
-    .spinner {
-      border: 4px solid var(--neon-blue)33;
-      border-top: 4px solid var(--neon-blue);
+    .logo-icon {
+      background: var(--accent);
+      color: var(--bg);
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      box-shadow: 0 0 25px rgba(78, 205, 196, 0.3);
     }
 
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(to right, var(--accent), var(--accent-light));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 5px;
     }
 
-    .toast {
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      padding: 12px 25px;
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: var(--shadow);
+      font-size: 1rem;
+    }
+
+    .btn:hover {
+      background: var(--accent-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 15px 25px rgba(78, 205, 196, 0.25);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateY(-2px);
+      border-color: var(--accent);
+      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-danger {
+      background: transparent;
+      color: var(--danger);
+      border: 1px solid var(--danger);
+    }
+
+    .btn-danger:hover {
+      background: rgba(248, 113, 113, 0.1);
+    }
+
+    .panel {
+      background: var(--card-bg);
+      padding: 25px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 25px;
+      border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+
+    .panel:hover {
+      border-color: rgba(78, 205, 196, 0.3);
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+
+    .panel-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .icon-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 1.1rem;
+      padding: 6px;
+      border-radius: 6px;
+      transition: var(--transition);
+    }
+
+    .icon-btn:hover {
+      color: var(--accent);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group label {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .form-group .info-icon {
+      color: var(--accent);
+      cursor: help;
+      font-size: 0.9rem;
+    }
+
+    .form-group input {
+      padding: 12px 15px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: rgba(30, 30, 30, 0.7);
+      color: var(--text);
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.2);
+    }
+
+    .output-container {
+      position: relative;
+    }
+
+    .output-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+
+    .output {
+      background: rgba(18, 18, 18, 0.8);
+      padding: 20px;
+      border-radius: var(--radius-sm);
+      font-family: 'Fira Code', 'Consolas', monospace;
+      max-height: 400px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      border: 1px solid var(--border);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .output::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .output::-webkit-scrollbar-track {
+      background: rgba(30, 30, 30, 0.5);
+    }
+
+    .output::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 4px;
+    }
+
+    .notification {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      padding: 1rem 2rem;
-      background: var(--deep-space);
-      border: 1px solid var(--neon-blue);
-      border-radius: 0.5rem;
+      background: var(--card-bg);
+      color: var(--text);
+      padding: 15px 25px;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transform: translateY(100px);
       opacity: 0;
-      transform: translateY(100%);
-      transition: all 0.3s ease;
+      transition: var(--transition);
+      z-index: 1000;
+      border-left: 4px solid var(--accent);
     }
 
-    .toast.visible {
-      opacity: 1;
+    .notification.show {
       transform: translateY(0);
+      opacity: 1;
+    }
+
+    .notification.success {
+      border-left-color: var(--success);
+    }
+
+    .notification.error {
+      border-left-color: var(--danger);
+    }
+
+    .file-input-container {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 20px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .file-label {
+      display: block;
+      padding: 15px;
+      background: rgba(30, 30, 30, 0.7);
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+      color: var(--text-secondary);
+    }
+
+    .file-label:hover {
+      border-color: var(--accent);
+      background: rgba(78, 205, 196, 0.05);
+    }
+
+    .file-label i {
+      display: block;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: var(--accent);
+    }
+
+    #fileInput {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .stats {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(30, 30, 30, 0.5);
+      padding: 6px 12px;
+      border-radius: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .btn-group {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+    }
+
+    .highlight {
+      animation: highlight 1.5s ease;
+    }
+
+    @keyframes highlight {
+      0% { background: rgba(78, 205, 196, 0.3); }
+      100% { background: transparent; }
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vkBeautify/0.99.00/vkbeautify.js"></script>
 </head>
 <body>
-  <div class="loading-overlay" id="loader">
-    <div class="spinner"></div>
-  </div>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <div class="logo-icon">
+          <i class="fas fa-tools"></i>
+        </div>
+        <div>
+          <h1>Handling.meta Tuner</h1>
+          <p class="subtitle">Professional tool for tuning FiveM vehicle handling parameters with real-time preview</p>
+        </div>
+      </div>
+    </header>
 
-  <div class="toast" id="toast"></div>
-
-  <h1>⚡ CyberTune Pro - Ultimate Handling.meta Editor</h1>
-
-  <div class="section">
-    <h2>📁 File Operations</h2>
-    <div class="button-group">
-      <input type="file" id="fileInput" multiple accept=".xml,.meta" hidden />
-      <button onclick="document.getElementById('fileInput').click()">
-        📥 Import Files
-      </button>
-      <button onclick="exportCombinedXML()" id="exportBtn" disabled>
-        📤 Export handling.meta
-      </button>
-      <button onclick="clearAll()">❌ Clear All</button>
+    <div class="file-input-container">
+      <label class="file-label" for="fileInput">
+        <i class="fas fa-cloud-upload-alt"></i>
+        Click to import or drag & drop handling.meta file
+      </label>
+      <input type="file" id="fileInput" accept=".meta,.xml">
     </div>
-    <div class="note">Supports file drag & drop</div>
-    <div id="fileList" class="output"></div>
+
+    <div class="btn-group">
+      <button id="importBtn" class="btn">
+        <i class="fas fa-folder-open"></i> Import Meta
+      </button>
+      <button id="exportBtn" class="btn">
+        <i class="fas fa-file-export"></i> Export Meta
+      </button>
+      <button id="resetBtn" class="btn btn-secondary">
+        <i class="fas fa-redo"></i> Reset Changes
+      </button>
+      <button id="defaultsBtn" class="btn btn-secondary">
+        <i class="fas fa-undo"></i> Load Defaults
+      </button>
+    </div>
+
+    <div id="controlsPanel" class="panel">
+      <div class="panel-header">
+        <h2 class="panel-title">
+          <i class="fas fa-sliders-h"></i> Handling Parameters
+        </h2>
+        <div class="panel-actions">
+          <button class="icon-btn" title="Expand All">
+            <i class="fas fa-expand"></i>
+          </button>
+          <button class="icon-btn" title="Collapse All">
+            <i class="fas fa-compress"></i>
+          </button>
+        </div>
+      </div>
+      <div id="formGrid" class="form-grid"></div>
+      <div class="stats">
+        <div class="stat-item">
+          <i class="fas fa-cogs"></i>
+          <span id="paramCount">0</span> parameters
+        </div>
+        <div class="stat-item">
+          <i class="fas fa-edit"></i>
+          <span id="modifiedCount">0</span> modified
+        </div>
+      </div>
+    </div>
+
+    <div id="previewPanel" class="panel">
+      <div class="panel-header">
+        <h2 class="panel-title">
+          <i class="fas fa-file-code"></i> XML Preview
+        </h2>
+        <div class="panel-actions">
+          <button class="icon-btn" id="copyBtn" title="Copy to Clipboard">
+            <i class="fas fa-copy"></i>
+          </button>
+          <button class="icon-btn" title="Toggle Wrap">
+            <i class="fas fa-text-width"></i>
+          </button>
+        </div>
+      </div>
+      <div class="output-container">
+        <pre id="preview" class="output">Import a handling.meta file to begin editing...</pre>
+      </div>
+    </div>
   </div>
 
-  <div class="section">
-    <h2>🔧 Active Tuning Parameters</h2>
-    <div id="combinedOutput" class="grid"></div>
+  <div id="notification" class="notification">
+    <i class="fas fa-check-circle"></i>
+    <span id="notification-text">Operation completed successfully</span>
   </div>
 
-<script>
-// Fixed JavaScript implementation
-let handlingEntries = new Map();
-const toast = document.getElementById('toast');
-const loader = document.getElementById('loader');
-const exportBtn = document.getElementById('exportBtn');
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // DOM elements
+      const importBtn = document.getElementById('importBtn');
+      const exportBtn = document.getElementById('exportBtn');
+      const resetBtn = document.getElementById('resetBtn');
+      const defaultsBtn = document.getElementById('defaultsBtn');
+      const copyBtn = document.getElementById('copyBtn');
+      const fileInput = document.getElementById('fileInput');
+      const formGrid = document.getElementById('formGrid');
+      const preview = document.getElementById('preview');
+      const notification = document.getElementById('notification');
+      const notificationText = document.getElementById('notification-text');
+      const paramCount = document.getElementById('paramCount');
+      const modifiedCount = document.getElementById('modifiedCount');
 
-// Add event listeners
-document.getElementById('fileInput').addEventListener('change', parseMultiple);
+      // App state
+      let defaults = {};
+      let xmlDoc = null;
+      let itemEl = null;
+      let originalXmlText = '';
+      let modifiedParams = 0;
+      let paramTotal = 0;
 
-function showToast(message, duration = 3000) {
-  toast.textContent = message;
-  toast.classList.add('visible');
-  setTimeout(() => toast.classList.remove('visible'), duration);
-}
+      // Initialize
+      initEventListeners();
 
-async function parseMultiple() {
-  try {
-    loader.style.display = 'grid';
-    const files = document.getElementById('fileInput').files;
-    if (!files.length) return;
-    
-    handlingEntries.clear();
-    const output = document.getElementById('combinedOutput');
-    output.innerHTML = '';
-
-    // Fixed Promise.all syntax
-    await Promise.all(Array.from(files).map(async file => {
-      const text = await file.text();
-      const parser = new DOMParser();
-      const xml = parser.parseFromString(text, 'text/xml');
-      
-      if (xml.querySelector('parsererror')) {
-        showToast(`❌ Error parsing ${file.name}`, 5000);
-        return;
+      function initEventListeners() {
+        importBtn.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', handleImport);
+        exportBtn.addEventListener('click', handleExport);
+        resetBtn.addEventListener('click', handleReset);
+        defaultsBtn.addEventListener('click', loadDefaultValues);
+        copyBtn.addEventListener('click', copyToClipboard);
+        
+        // Drag and drop support
+        const dropZone = document.querySelector('.file-label');
+        dropZone.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          dropZone.style.borderColor = 'var(--accent)';
+          dropZone.style.background = 'rgba(78, 205, 196, 0.1)';
+        });
+        
+        dropZone.addEventListener('dragleave', () => {
+          dropZone.style.borderColor = 'var(--border)';
+          dropZone.style.background = 'rgba(30, 30, 30, 0.7)';
+        });
+        
+        dropZone.addEventListener('drop', (e) => {
+          e.preventDefault();
+          dropZone.style.borderColor = 'var(--border)';
+          dropZone.style.background = 'rgba(30, 30, 30, 0.7)';
+          
+          if (e.dataTransfer.files.length) {
+            fileInput.files = e.dataTransfer.files;
+            handleImport({ target: fileInput });
+          }
+        });
       }
 
-      xml.querySelectorAll('Item[type="CHandlingData"]').forEach(item => {
-        const handlingName = item.querySelector('handlingName')?.textContent;
-        if (!handlingName) return;
+      function showNotification(message, type = 'success') {
+        notificationText.textContent = message;
+        notification.className = `notification ${type}`;
+        notification.classList.add('show');
+        
+        setTimeout(() => {
+          notification.classList.remove('show');
+        }, 3000);
+      }
 
-        // Clone the original node to preserve structure
-        handlingEntries.set(handlingName, item.cloneNode(true));
-      });
-    }));
+      function updateStats() {
+        paramCount.textContent = paramTotal;
+        modifiedCount.textContent = modifiedParams;
+      }
 
-    updateUI();
-    exportBtn.disabled = false;
-    showToast(`✅ Loaded ${handlingEntries.size} handling entries`);
-  } catch (error) {
-    showToast(`⚠️ Error: ${error.message}`, 5000);
-  } finally {
-    loader.style.display = 'none';
-  }
-}
+      function handleImport(e) {
+        const file = e.target.files[0]; 
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onloadstart = () => {
+          preview.textContent = 'Loading file...';
+        };
+        
+        reader.onload = () => {
+          try {
+            originalXmlText = reader.result;
+            xmlDoc = new DOMParser().parseFromString(originalXmlText, 'application/xml');
+            itemEl = xmlDoc.querySelector('Item[type="CHandlingData"]');
+            
+            if (!itemEl) {
+              showNotification('No <Item type="CHandlingData"> found', 'error');
+              preview.textContent = 'Invalid file format. Please import a valid handling.meta file.';
+              return;
+            }
+            
+            defaults = {};
+            formGrid.innerHTML = '';
+            modifiedParams = 0;
+            paramTotal = 0;
+            
+            [...itemEl.childNodes].forEach(node => {
+              if (node.nodeType !== 1) return;
+              const tag = node.tagName;
+              if (tag === 'SubHandlingData') return;
+              
+              if (node.hasAttribute('value')) {
+                const val = node.getAttribute('value');
+                defaults[`${tag}_value`] = val;
+                createInput(tag, 'value', val);
+                paramTotal++;
+              } else if (node.children.length === 0 && node.textContent.trim()) {
+                const val = node.textContent.trim();
+                defaults[`${tag}_text`] = val;
+                createInput(tag, 'text', val);
+                paramTotal++;
+              } else if (node.attributes.length > 0) {
+                [...node.attributes].forEach(attr => {
+                  const id = `${tag}_${attr.name}`;
+                  defaults[id] = attr.value;
+                  createInput(tag, attr.name, attr.value);
+                  paramTotal++;
+                });
+              }
+            });
+            
+            updatePreview();
+            updateStats();
+            showNotification('File imported successfully!', 'success');
+          } catch (error) {
+            console.error('Error parsing XML:', error);
+            showNotification('Error parsing XML file', 'error');
+            preview.textContent = 'Error: ' + error.message;
+          }
+        };
+        
+        reader.onerror = () => {
+          showNotification('Error reading file', 'error');
+          preview.textContent = 'Error reading file. Please try again.';
+        };
+        
+        reader.readAsText(file);
+      }
 
-function updateUI() {
-  const output = document.getElementById('combinedOutput');
-  output.innerHTML = '';
-
-  handlingEntries.forEach((item, handlingName) => {
-    const container = document.createElement('div');
-    container.className = 'entry';
-    container.innerHTML = `<h3>${handlingName}</h3>`;
-
-    Array.from(item.children).forEach(node => {
-      if (node.nodeType === 1 && node.hasAttribute('value')) {
-        const input = document.createElement('input');
-        input.type = 'number';
-        input.step = '0.001';
-        input.value = node.getAttribute('value');
-        input.className = 'param-input';
-        input.dataset.param = node.tagName;
-        input.dataset.handling = handlingName;
-
+      function createInput(tag, attr, val) {
+        const id = `${tag}_${attr}`;
+        const group = document.createElement('div'); 
+        group.className = 'form-group';
+        
         const label = document.createElement('label');
-        label.textContent = node.tagName;
-        label.appendChild(input);
-        container.appendChild(label);
+        label.textContent = attr === 'text' ? tag : `${tag} ${attr}`;
+        
+        const infoIcon = document.createElement('i');
+        infoIcon.className = 'fas fa-info-circle info-icon';
+        infoIcon.title = `Adjust the ${attr === 'text' ? tag : `${attr} of ${tag}`} parameter`;
+        label.appendChild(infoIcon);
+        
+        const input = document.createElement('input');
+        input.id = id; 
+        input.value = val;
+        input.dataset.tag = tag; 
+        input.dataset.attr = attr;
+        input.dataset.original = val;
+        
+        input.addEventListener('input', () => {
+          const original = input.dataset.original;
+          if (input.value !== original) {
+            if (!input.classList.contains('highlight')) {
+              input.classList.add('highlight');
+              modifiedParams++;
+            }
+          } else {
+            if (input.classList.contains('highlight')) {
+              input.classList.remove('highlight');
+              modifiedParams--;
+            }
+          }
+          
+          applyChange(tag, attr, input.value);
+          updatePreview();
+          updateStats();
+        });
+        
+        group.append(label, input);
+        formGrid.appendChild(group);
+      }
+
+      function applyChange(tag, attr, value) {
+        if (!itemEl) return;
+        const target = itemEl.querySelector(tag);
+        if (!target) return;
+        
+        if (attr === 'text') {
+          target.textContent = value;
+        } else {
+          target.setAttribute(attr, value);
+        }
+      }
+
+      function updatePreview() {
+        if (!xmlDoc) return;
+        
+        try {
+          const serializer = new XMLSerializer();
+          const declaration = '<?xml version="1.0" encoding="UTF-8"?>\n';
+          const body = serializer.serializeToString(xmlDoc.documentElement);
+          const fullXml = declaration + body;
+          
+          preview.textContent = (typeof vkbeautify === 'object' && vkbeautify.xml)
+            ? vkbeautify.xml(fullXml)
+            : fullXml;
+        } catch (error) {
+          console.error('Error generating preview:', error);
+          preview.textContent = 'Error generating preview: ' + error.message;
+        }
+      }
+
+      function handleExport() {
+        if (!xmlDoc) {
+          showNotification('No file loaded to export', 'error');
+          return;
+        }
+        
+        const content = preview.textContent;
+        const blob = new Blob([content], { type: 'text/xml' });
+        const link = document.createElement('a'); 
+        link.href = URL.createObjectURL(blob);
+        link.download = 'handling.meta'; 
+        link.click();
+        
+        showNotification('File exported successfully!', 'success');
+      }
+
+      function handleReset() {
+        if (!xmlDoc) {
+          showNotification('No file loaded to reset', 'error');
+          return;
+        }
+        
+        const inputs = formGrid.querySelectorAll('input');
+        inputs.forEach(inp => {
+          const original = inp.dataset.original;
+          if (inp.value !== original) {
+            inp.value = original;
+            applyChange(inp.dataset.tag, inp.dataset.attr, original);
+            inp.classList.remove('highlight');
+          }
+        });
+        
+        modifiedParams = 0;
+        updatePreview();
+        updateStats();
+        showNotification('All changes reset', 'success');
+      }
+
+      function loadDefaultValues() {
+        if (!xmlDoc) {
+          showNotification('No file loaded to reset to defaults', 'error');
+          return;
+        }
+        
+        Object.entries(defaults).forEach(([id, val]) => {
+          const inp = document.getElementById(id);
+          if (inp) {
+            inp.value = val;
+            applyChange(inp.dataset.tag, inp.dataset.attr, val);
+            inp.classList.remove('highlight');
+          }
+        });
+        
+        modifiedParams = 0;
+        updatePreview();
+        updateStats();
+        showNotification('Loaded default values', 'success');
+      }
+
+      function copyToClipboard() {
+        if (!xmlDoc) {
+          showNotification('No content to copy', 'error');
+          return;
+        }
+        
+        navigator.clipboard.writeText(preview.textContent)
+          .then(() => {
+            showNotification('Copied to clipboard!', 'success');
+          })
+          .catch(err => {
+            console.error('Failed to copy: ', err);
+            showNotification('Failed to copy content', 'error');
+          });
       }
     });
-
-    output.appendChild(container);
-  });
-}
-
-async function exportCombinedXML() {
-  try {
-    loader.style.display = 'grid';
-    const entries = Array.from(handlingEntries.values());
-    
-    // Create fresh XML structure
-    const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
-<CHandlingDataMgr>
-  <HandlingData>
-    ${entries.map(entry => {
-      const clone = entry.cloneNode(true);
-      const handlingName = clone.querySelector('handlingName').textContent;
-      
-      // Find all inputs for this handling entry
-      document.querySelectorAll(`input[data-handling="${handlingName}"]`).forEach(input => {
-        const param = input.dataset.param;
-        const value = input.value;
-        const elem = clone.querySelector(param);
-        if (elem) elem.setAttribute('value', value);
-      });
-      
-      return clone.outerHTML;
-    }).join('\n    ')}
-  </HandlingData>
-</CHandlingDataMgr>`;
-
-    // Create downloadable file
-    const blob = new Blob([xmlContent], { type: 'application/xml' });
-    const url = URL.createObjectURL(blob);
-    
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `handling_${Date.now()}.meta`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    
-    showToast('✅ File exported successfully!');
-  } catch (error) {
-    showToast(`⚠️ Export failed: ${error.message}`, 5000);
-  } finally {
-    loader.style.display = 'none';
-  }
-}
-
-function clearAll() {
-  handlingEntries.clear();
-  document.getElementById('combinedOutput').innerHTML = '';
-  document.getElementById('fileInput').value = '';
-  exportBtn.disabled = true;
-  showToast('🧹 All entries cleared');
-}
-
-// Drag & drop handlers
-document.addEventListener('dragover', e => e.preventDefault());
-document.addEventListener('drop', e => {
-  e.preventDefault();
-  document.getElementById('fileInput').files = e.dataTransfer.files;
-  parseMultiple();
-});
-
-// Real-time input validation
-document.addEventListener('input', e => {
-  if (e.target.classList.contains('param-input')) {
-    const value = parseFloat(e.target.value);
-    e.target.style.borderColor = isNaN(value) ? '#ff4444' : '#00f7ff33';
-  }
-});
-</script>
+  </script>
 </body>
 </html>
